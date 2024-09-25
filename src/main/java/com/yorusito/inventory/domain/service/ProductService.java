@@ -16,18 +16,22 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    // Buscar producto por ID
+    public Optional<Product> findById(Long productId) {
+        return productRepository.findById(productId);
     }
 
+    // Obtener todos los productos
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
+    // Guardar producto
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 
+    // Eliminar producto por ID
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }

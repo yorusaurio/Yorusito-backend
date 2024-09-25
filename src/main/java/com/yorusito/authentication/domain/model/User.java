@@ -1,10 +1,10 @@
 package com.yorusito.authentication.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.yorusito.customer.domain.model.Customer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Setter
@@ -18,7 +18,10 @@ public class User {
 
     private String username;
     private String password;
-    private String role; // Ej. ADMIN, CUSTOMER
+    private String role; // Ej. "ROLE_ADMIN" o "ROLE_CUSTOMER"
 
-
+    // Relación con el cliente (puede ser opcional para los usuarios no clientes)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference // Esto evita la serialización infinita en el lado del user
+    private Customer customer;
 }
