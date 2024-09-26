@@ -30,15 +30,18 @@ public class Order {
     @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> items;
 
+    // Agregar el campo totalPrice
+    private double totalPrice;
+
     // Constructor vacío
     public Order() {}
 
     // Constructor con parámetros
-    public Order(User customer, LocalDateTime orderDate, OrderStatus status, List<OrderItem> items) {
+    public Order(User customer, LocalDateTime orderDate, OrderStatus status, List<OrderItem> items, double totalPrice) {
         this.customer = customer;
         this.orderDate = orderDate;
         this.status = status;
         this.items = items;
+        this.totalPrice = totalPrice;
     }
-
 }

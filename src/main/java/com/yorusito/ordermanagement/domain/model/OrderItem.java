@@ -1,9 +1,7 @@
 package com.yorusito.ordermanagement.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.yorusito.inventory.domain.model.Product;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +14,9 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     private int quantity;
 
@@ -26,10 +26,9 @@ public class OrderItem {
     public OrderItem() {}
 
     // Constructor con parámetros
-    public OrderItem(String productId, int quantity, double price) {
-        this.productId = productId;
+    public OrderItem(Product product, int quantity, double price) {
+        this.product = product;
         this.quantity = quantity;
         this.price = price;
     }
-
 }

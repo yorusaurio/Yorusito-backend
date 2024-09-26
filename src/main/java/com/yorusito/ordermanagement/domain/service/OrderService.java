@@ -1,6 +1,7 @@
 package com.yorusito.ordermanagement.domain.service;
 
 import com.yorusito.ordermanagement.domain.model.Order;
+import com.yorusito.ordermanagement.domain.model.OrderItem;
 import com.yorusito.ordermanagement.domain.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,12 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
+    // Método para calcular el precio total basado en los ítems
+    public double calculateTotalPrice(List<OrderItem> items) {
+        return items.stream()
+                .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
+                .sum();
+    }
     public Optional<Order> getOrderById(Long id) {
         return orderRepository.findById(id);
     }
@@ -25,6 +32,9 @@ public class OrderService {
     }
 
     public Order saveOrder(Order order) {
+        // Calcular el precio total antes de guardar
+        double totalPrice = calculateTotalPrice(order.getItems());
+        order.setTotalPrice(totalPrice);
         return orderRepository.save(order);
     }
 
